@@ -10,6 +10,12 @@ h1 {
     margin: 1rem;
 }
 
+.link {
+    text-decoration: none;
+    color: black;
+    margin-left: 16px;
+}
+
 .cards {
     display: flex;
     align-items: center;
@@ -18,7 +24,7 @@ h1 {
 }
 
 .card {
-    flex-basis: 31%;
+    flex-basis: 100%;
     margin: 1rem 0.4rem;
     padding: 1rem 0.4rem 2.5rem 0.4rem;
     border: solid 1px lightgrey;

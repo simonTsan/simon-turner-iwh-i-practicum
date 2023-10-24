@@ -1,0 +1,20 @@
+doctype html
+html(lang="en")
+    head
+        title= title
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="/css/style.css")
+    body
+        .form-wrapper
+            h1 Add a new Artist
+
+            p #[a(href="/") Return to the homepage]
+
+            form(method="POST")
+                label(for="artist_name") Name:
+                input(type="text" name="artist_name" id="artist_name" required)
+                label(for="artist_band") Band:
+                input(type="text" name="artist_band" id="artist_band" required)
+                label(for="artist_genre") Genre:
+                input(type="text" name="artist_genre" id="artist_genre" required)
+                input(type="submit" value="Submit")

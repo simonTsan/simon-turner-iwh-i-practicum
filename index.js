@@ -8,22 +8,85 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // * Please DO NOT INCLUDE the private app access token in your repo. Don't do this practicum in your normal account.
-const PRIVATE_APP_ACCESS = '';
+const PRIVATE_APP_ACCESS = process.env.PRIVATE_APP_ACCESS;
 
 // TODO: ROUTE 1 - Create a new app.get route for the homepage to call your custom object data. Pass this data along to the front-end and create a new pug template in the views folder.
 
 // * Code for Route 1 goes here
+app.get("/", async (req, res) => {
+
+    const artists =
+      "https://api.hubapi.com/crm/v3/objects/artists?properties=artist_name,artist_genre,artist_band";
+    const headers = {
+        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+        "Content-Type": "application/json",
+    };
+    try {
+        const resp = await axios.get(artists, { headers });
+        const data = resp.data.results;
+        console.log("data", data);
+        res.render("homepage", {
+        title: "Update Custom Object Form | Integrating With HubSpot I Practicum.",
+        data,
+        });
+    } catch (error) {
+        console.error(error);
+    }
+
+});
 
 // TODO: ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
 
 // * Code for Route 2 goes here
+app.get("/update-cobj", async (req, res) => {
+  const artists =
+    "https://api.hubapi.com/crm/v3/objects/artists?properties=artist_name,artist_genre,artist_band";
+  const headers = {
+    Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+    "Content-Type": "application/json",
+  };
+  try {
+    const resp = await axios.get(artists, { headers });
+    const data = resp.data.results;
+
+    res.render("updates", {
+      title:
+        "Update Custom Object Form | Integrating With HubSpot I Practicum.",
+      data,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 // TODO: ROUTE 3 - Create a new app.post route for the custom objects form to create or update your custom object data. Once executed, redirect the user to the homepage.
 
 // * Code for Route 3 goes here
+    app.post("/update-cobj", async (req, res) => {
+      const update = {
+        properties: {
+            artist_name: req.body.artist_name,
+            artist_genre: req.body.artist_genre,
+            artist_band: req.body.artist_band,
+        },
+      };
 
-/** 
-* * This is sample code to give you a reference for how you should structure your calls. 
+      const updateContact = `https://api.hubapi.com/crm/v3/objects/artists`;
+      const headers = {
+        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+        "Content-Type": "application/json",
+      };
+
+      try {
+        await axios.patch(updateContact, update, { headers });
+        res.redirect("back");
+      } catch (err) {
+        console.error(err);
+      }
+    });
+
+/**
+* * This is sample code to give you a reference for how you should structure your calls.
 
 * * App.get sample
 app.get('/contacts', async (req, res) => {
@@ -35,7 +98,7 @@ app.get('/contacts', async (req, res) => {
     try {
         const resp = await axios.get(contacts, { headers });
         const data = resp.data.results;
-        res.render('contacts', { title: 'Contacts | HubSpot APIs', data });      
+        res.render('contacts', { title: 'Contacts | HubSpot APIs', data });
     } catch (error) {
         console.error(error);
     }
@@ -56,7 +119,7 @@ app.post('/update', async (req, res) => {
         'Content-Type': 'application/json'
     };
 
-    try { 
+    try {
         await axios.patch(updateContact, update, { headers } );
         res.redirect('back');
     } catch(err) {
