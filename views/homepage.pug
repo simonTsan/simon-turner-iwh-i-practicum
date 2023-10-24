@@ -6,12 +6,16 @@ html
         link(rel="stylesheet", href="/css/style.css")
     body
     .form-wrapper
-        h1 Homepage
+        h1 Homepage (Musicians)
 
         p.link #[a(href=`/update-cobj`) Add/Update this table]
-        .cards
-            each artist in data
-                .card
-                    h2.card__name #{artist.properties.artist_name}
-                    p.card__email Band: #{artist.properties.artist_band}
-                    p.card__email Genre: #{artist.properties.artist_genre}
+            table
+                tr
+                    th Name
+                    th Band
+                    th Genre
+                each artist in data
+                    tr
+                    td= artist.properties.artist_name
+                    td= artist.properties.artist_band
+                    td= artist.properties.artist_genre
