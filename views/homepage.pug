@@ -5,17 +5,17 @@ html
         meta(name="viewport" content="width=device-width, initial-scale=1")
         link(rel="stylesheet", href="/css/style.css")
     body
-    .form-wrapper
-        h1 Homepage (Musicians)
+        .form-wrapper
+            h1 Homepage (Musicians)
 
-        p.link #[a(href=`/update-cobj`) Add/Update this table]
-            table
-                tr
-                    th Name
-                    th Band
-                    th Genre
-                each artist in data
+            p #[a(href=`/update-cobj`) Add/Update this table]
+                table
                     tr
-                    td= artist.properties.artist_name
-                    td= artist.properties.artist_band
-                    td= artist.properties.artist_genre
+                        th Name
+                        th Band
+                        th Genre
+                    each artist in data
+                        tr
+                        td= artist.properties.artist_name
+                        td= artist.properties.artist_band
+                        td= artist.properties.artist_genre
