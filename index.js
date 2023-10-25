@@ -23,7 +23,6 @@ app.get("/", async (req, res) => {
     try {
         const resp = await axios.get(artists, { headers });
         const data = resp.data.results;
-   //     console.log("data", data);
         res.render("homepage", {
         title: "Update Custom Object Form | Integrating With HubSpot I Practicum.",
         data,
