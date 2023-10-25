@@ -14,7 +14,6 @@ const PRIVATE_APP_ACCESS = "pat-eu1-943a997f-633d-44eb-b153-7f9b9fb5e5c2";
 
 // * Code for Route 1 goes here
 app.get("/", async (req, res) => {
-
     const artists =
       "https://api.hubapi.com/crm/v3/objects/artists?properties=artist_name,artist_genre,artist_band";
     const headers = {
@@ -24,7 +23,7 @@ app.get("/", async (req, res) => {
     try {
         const resp = await axios.get(artists, { headers });
         const data = resp.data.results;
-        console.log("data", data);
+   //     console.log("data", data);
         res.render("homepage", {
         title: "Update Custom Object Form | Integrating With HubSpot I Practicum.",
         data,
@@ -65,9 +64,9 @@ app.get("/update-cobj", async (req, res) => {
     app.post("/update-cobj", async (req, res) => {
       const update = {
         properties: {
-            artist_name: req.body.artist_name,
-            artist_genre: req.body.artist_genre,
-            artist_band: req.body.artist_band,
+            "artist_name": req.body.artist_name,
+            "artist_genre": req.body.artist_genre,
+            "artist_band": req.body.artist_band,
         },
       };
 
@@ -78,8 +77,8 @@ app.get("/update-cobj", async (req, res) => {
       };
 
       try {
-        await axios.patch(updateArtist, update, { headers });
-        res.redirect("back");
+        await axios.post(updateArtist, update, { headers });
+        res.redirect("/");
       } catch (err) {
         console.error(err);
       }
